@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @ExtendWith(SpringExtension::class)
@@ -24,6 +24,16 @@ class ArticleControllerTests {
     @BeforeEach
     fun setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(target).build()
+    }
+
+    @Test
+    fun getArticleListTest() {
+        mockMvc.perform(
+                get("/")
+        )
+                .andExpect(status().isOk)
+                .andExpect(model().attributeExists("articles"))
+                .andExpect(view().name("index"))
     }
 
     @Test
