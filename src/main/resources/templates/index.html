@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>BBS</title>
+</head>
+<body>
+<header class="header">掲示板</header>
+<div class="articles" th:each="article:${articles}" th:object="${article}">
+    <div>
+        <table border="1" class="article_table">
+            <tr class="article_title">
+                <td>
+                    <label>
+                        <input type="radio"
+                               name="article_check"
+                               th:text="*{id} + '. ' + *{title}"/>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td th:text="'名前：' + *{name} + '投稿日：'
+                            + ${#dates.format(article.registerAt, 'yyyy/MM/ddHH:mm:ss')}"
+                ></td>
+            </tr>
+            <tr>
+                <td>
+                    <pre th:text="*{contents}"></pre>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
